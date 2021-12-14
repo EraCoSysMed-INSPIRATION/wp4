@@ -115,7 +115,7 @@ dataFile = "theo_all.xlsx"
   
   output <- matrix(ncol=5 + length(parameterPaths), nrow=0) %>% as.data.frame()
   
-  for(i in  seq(0.8, 0.81, 0.01)){
+  for(i in  seq(1.16, 1.2, 0.01)){
   
   parameters <- list()
   
@@ -160,20 +160,20 @@ dataFile = "theo_all.xlsx"
   print(results$msg)
 
   # bobyqa
-   ind_res <- data.frame(t(c(i, results$ssr, results$feval, results$par, results$msg,  duration)))
+   # ind_res <- data.frame(t(c(i, results$ssr, results$feval, results$par, results$msg,  duration)))
   # marq
   # ind_res <- data.frame(t(c(i, results$ssr, results$iterations, results$par, results$message,  duration)))
   #Nelder-Mead
-  # ind_res <- data.frame(t(c(i, results$ssr, results$counts[[1]], results$par, results$message,  duration)))
+  ind_res <- data.frame(t(c(i, results$ssr, results$counts[[1]], results$par, results$message,  duration)))
   output <- rbind(output,ind_res)
   
   }
-   colnames(output) <- c("var","ssr","feval", parameterPaths, "msg", "duration (min)")
-   # _Nelder-Mead_:
-   # colnames(output) <- c("ID","ssr","feval", parameterPaths,  "duration (min)")
+   # colnames(output) <- c("var","ssr","feval", parameterPaths, "msg", "duration (min)")
+   # Nelder-Mead:
+   colnames(output) <- c("var","ssr","feval", parameterPaths,  "duration (min)")
    
-   write.xlsx(output, file.path(dataFolder,"pop_results_cov_bobyqa_init20.xlsx"), overwrite = TRUE)
-   write.xlsx(output, file.path("O:/Programming/pop_results_cov_bobyqa_init20.xlsx"), overwrite = TRUE)
+   write.xlsx(output, file.path(dataFolder,"Results/pop_results_cov_Nelder-Mead_init20-120.xlsx"), overwrite = TRUE)
+   write.xlsx(output, file.path("O:/Programming/pop_results_cov_Nelder-Mead _init20.xlsx"), overwrite = TRUE)
   
   
   
