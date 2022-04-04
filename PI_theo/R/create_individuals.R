@@ -18,8 +18,8 @@ create_human_individual <- function(population = unname(unlist(ospsuite::HumanPo
   gestational_age_unit <- match.arg(gestational_age_unit)
   
   chars <- createIndividualCharacteristics(species = "Human",
-                                           population = ospsuite::HumanPopulation[[population]],
-                                           gender = ospsuite::Gender[[gender]],
+                                           population = population,
+                                           gender = gender,
                                            weight = weight,
                                            height = height,
                                            age = age,
