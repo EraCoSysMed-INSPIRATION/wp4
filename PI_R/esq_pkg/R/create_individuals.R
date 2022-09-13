@@ -3,7 +3,7 @@ create_human_individual <- function(population = unname(unlist(ospsuite::HumanPo
                                     weight,
                                     age,
                                     height = NULL,
-                                    gestational_age = NULL,
+                                    gestational_age = 40,
                                     molecule_ontogenies = NULL, 
                                     weight_unit = c("kg", "g"),
                                     height_unit = c("m", "dm", "cm"),
@@ -115,7 +115,6 @@ create_human_individuals <- function(csv_file,
     sex <- ospsuite::Gender[[sex_id]]
     pop <- ospsuite::HumanPopulation[[pop_id]]
     
-    
     res <- tryCatch(
       create_human_individual(gender = sex,
                               age = age,
@@ -175,7 +174,7 @@ create_human_individual <- function(population = unname(unlist(ospsuite::HumanPo
                                     weight,
                                     age,
                                     height = NULL,
-                                    gestational_age = NULL,
+                                    gestational_age = 40,
                                     molecule_ontogenies = NULL, 
                                     weight_unit = c("kg", "g"),
                                     height_unit = c("m", "dm", "cm"),
