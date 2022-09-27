@@ -21,7 +21,7 @@ as_filter <- 2
 # TIME in h -> min
 observed_data <- read.table(data_file, sep = ",", header = TRUE) %>%
   filter(AS == as_filter) %>%
-  filter(ID %in% unique(ID)[1:15]) %>%
+  #filter(ID %in% unique(ID)[1:15]) %>%
   mutate(SEX = if_else(SEX == 1, "MALE", "FEMALE")) %>%
   mutate(POPULATION = if_else(ETHN == 1, "WhiteAmerican_NHANES_1997",
                                          "BlackAmerican_NHANES_1997") ) %>%
@@ -37,7 +37,7 @@ write.table(observed_data, processed_data_file,
 
 
 # -- SIMULATIONS ----------------------------------------------------------------------
-simulations <- create_simulations(model_file, processed_data_file, simulation_resolution = 6)
+simulations <- create_simulations(model_file, processed_data_file, simulation_resolution = 0.1)
 
 # -- FIT DEFINITIONS ------------------------------------------------------------------
 output_path <- "Organism|PeripheralVenousBlood|Dextromethorphan|Plasma (Peripheral Venous Blood)"
@@ -88,14 +88,21 @@ model <- function(psi, id, x) {
 
 
 saemix_model <- saemixModel(model = model,
-                            psi0  = c(kcat = 90),
+                            psi0  = c(kcat = 200),
                             error.model="combined",
                             transform.par = c(1))
 
 
 saemix_options <- list(map = TRUE, fim = TRUE, ll.is = FALSE,
-                       displayProgress = FALSE, seed = 123,
-                       save = FALSE, save.graphs = FALSE)
+                       displayProgress = TRUE, seed = 123,
+                       nbiter.saemix = c(30, 30),
+                       ll.gq = TRUE,
+                       ll.is = FALSE,
+                       nb.sim = 5,
+                       nb.simpred = 10,
+                       ipar.lmcmc = 5,
+                       nbdisplay = 3,
+                       save = TRUE, save.graphs = TRUE)
 
 saemix.fit    <- saemix(saemix_model, saemix_data, saemix_options)
 
